@@ -3,20 +3,14 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import PollBar from './PollBar'
-
-const styles = theme => ({})
+import styles from './styles/PollResult'
 
 class PollResult extends Component {
-
     render() {
-        const { question } = this.props;
+        const { question, classes } = this.props;
         return (
-            <div style={{
-                flex: 6, justifyContent: 'center',
-                alignItems: 'center', textAlign: 'center',
-
-            }}>
-                <div style={{ background: "#EABA00", padding: 10, }}>
+            <div className={classes.root}>
+                <div className={classes.heading}>
                     <Typography variant="h4" component="h3" >
                         Results:
                     </Typography>

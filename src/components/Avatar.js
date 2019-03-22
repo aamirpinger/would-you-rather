@@ -2,11 +2,11 @@ import React from 'react';
 
 function Avatar(props) {
     const { width, height, avatarURL, authorName } = props
-
     return (
         <div style={{
             flex: 3,
         }}>
+
             <img
                 src={avatarURL}
                 alt={authorName}
@@ -18,6 +18,8 @@ function Avatar(props) {
                     border: '0.15em solid #EABA00',
                 }}
             />
+
+
         </div>
     )
 }

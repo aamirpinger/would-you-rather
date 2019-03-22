@@ -14,35 +14,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { dispatch_saveQuestionAnswerAction } from '../actions/actionDispatchers'
 import PollResult from './PollResult';
+import styles from './styles/QuestionAttempting'
 
-const styles = theme => ({
-    answers: {
-        marginLeft: 10,
-        display: 'flex',
-
-    },
-
-    answerLabels: {
-        fontSize: 18,
-    },
-    radio: {
-        color: '#EABA00',
-        padding: 30,
-        '&$checked': {
-            color: '#EABA00',
-        }
-    },
-    checked: {},
-    button: {
-        border: "0.1em solid #EABA00",
-        backgroundColor: "white",
-        width: '100%',
-        '&:hover': {
-            backgroundColor: '#EABA00',
-        },
-        marginTop: 18,
-    }
-})
 class QuestionAttempting extends Component {
     state = {
         optionSelected: null,
@@ -59,9 +32,13 @@ class QuestionAttempting extends Component {
         const qid = this.props.question.id
         const answer = this.state.optionSelected
 
-        this.props.dispatch(dispatch_saveQuestionAnswerAction(authedUser, qid, answer))
-            .then(() => this.setState({ submited: true }))
-
+        if (this.state.optionSelected) {
+            this.props.dispatch(dispatch_saveQuestionAnswerAction(authedUser, qid, answer))
+                .then(() => this.setState({ submited: true }))
+        }
+        else {
+            alert("Please select any one option to submit")
+        }
     }
 
 
@@ -76,15 +53,10 @@ class QuestionAttempting extends Component {
                     <QuestionBoard avatarURL={avatarURL} authorName={authorName}>
                         {
                             (!submited)
-                                ? <div style={{
-                                    flex: 5, justifyContent: 'center',
-                                    alignItems: 'center', textAlign: 'center',
-                                }}>
-                                    <Typography variant="h4" component="h3" style={{
-                                        textAlign: 'left', padding: 20
-                                    }}>
+                                ? <div className={classes.root}>
+                                    <Typography variant="h4" component="h3" className={classes.heading}>
                                         Would you rather...
-                            </Typography>
+                                    </Typography>
                                     <Divider style={{ marginLeft: 20, marginRight: 20 }} />
 
                                     <RadioGroup

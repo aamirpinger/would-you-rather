@@ -8,37 +8,8 @@ import Panel from './Panel'
 import WhiteCard from './WhiteCard'
 import QuestionBoard from './QuestionBoard'
 import { connect } from 'react-redux';
+import styles from './styles/QuestionStatus'
 
-const styles = theme => ({
-    answers: {
-        marginLeft: 10,
-        display: 'flex',
-    },
-    heading: {
-        paddingTop: 30,
-        textAlign: 'left',
-    },
-    answerLabels: {
-        fontSize: 18,
-    },
-    radio: {
-        color: '#EABA00',
-        padding: 20,
-        '&$checked': {
-            color: '#EABA00',
-        }
-    },
-    checked: {},
-    button: {
-        border: "0.1em solid #EABA00",
-        backgroundColor: "white",
-        '&:hover': {
-            backgroundColor: '#EABA00',
-        },
-        marginTop: 18,
-        width: '100%'
-    }
-})
 class QuestionStatus extends Component {
 
     render() {

@@ -11,13 +11,6 @@ import {
 } from './actionCreators'
 
 
-// API FUNCTIONS
-// * `_getUsers()`
-// * `_getQuestions()`
-// * `_saveQuestion(question)`
-// * `_saveQuestionAnswer(object)`
-
-
 export const dispatch_authedUserAction = (authedUser) => authedUserActionCreator(authedUser)
 
 export const dispatch_userLoggedOutAction = () => userLoggedOutActionCreator()

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter, } from 'react-router-dom'
-import '../utils/App.css';
 import { connect } from 'react-redux';
 import { dispatch_initialDataAction } from '../actions/actionDispatchers'
-
-
+import Loader from './Loader'
+import './styles/App.css';
 import Routers from '../routers';
 
 class App extends Component {
@@ -16,7 +15,7 @@ class App extends Component {
   render() {
 
     if (this.props.loading) {
-      return <h1>Loading data, please wait....</h1>
+      return <Loader />
     }
 
     return (

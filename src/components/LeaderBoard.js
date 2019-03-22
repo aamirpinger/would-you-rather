@@ -7,35 +7,13 @@ import GridListTile from '@material-ui/core/GridListTile';
 import ScoreBadge from './ScoreBadge'
 import WhiteCard from './WhiteCard'
 import { connect } from 'react-redux'
-
-const styles = theme => ({
-    root: {
-        minHeight: 'inherit',
-        width: 'inherit',
-    },
-    gridList: {
-        justifyContent: 'space-between',
-        minHeight: 'inherit',
-        alignItems: 'center',
-        width: 'inherit',
-        display: 'flex',
-        //minWidth: '100%'
-        //        border: '1px solid red'
-    },
-    GridListTile: {
-        justifyContent: 'center',
-        display: 'flex',
-    }
-})
+import styles from './styles/LeaderBoard'
 
 function LeaderBoard(props) {
     const { classes, userRanking } = props
-    console.log(userRanking, "userRanking")
     return (
         Object.values(userRanking).map((user) => {
             const { id, name, avatarURL, questionAsked, answered } = user
-            // const questionAsked = Object.keys(user.questions).length
-            // const answered = Object.keys(user.answers).length
 
             return (
                 <WhiteCard key={id}>
@@ -69,14 +47,6 @@ const mapStateToProps = (state) => {
             answered: Object.keys(user.answers).length,
             questionAsked: user.questions.length
         })).sort((a, b) => (b.answered + b.questionAsked) - (a.answered + a.questionAsked))
-        // ,
-        // unAnsweredQuestion: Object.values(state.users).map(q =>
-
-        //     !state.users[state.authedUser].answers.hasOwnProperty(q.id)
-        // ).sort((a, b) => b.timestamp - a.timestamp),
-
-
-        // users: state.users
     })
 }
 export default connect(mapStateToProps)(withStyles(styles)(LeaderBoard));

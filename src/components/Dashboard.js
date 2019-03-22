@@ -24,85 +24,8 @@ import TrendingUpSharp from '@material-ui/icons/TrendingUpSharp';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Avatar from './Avatar';
 import { dispatch_userLoggedOutAction } from '../actions/actionDispatchers'
-
-const drawerWidth = 240;
-
-const styles = theme => ({
-    root: {
-        // display: 'flex',
-        backgroundColor: "#f1f1c0",
-        minHeight: '-webkit-fill-available',
-        flex: 1,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        backgroundColor: "#EABA00",
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginLeft: 12,
-        marginRight: 36,
-    },
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-    },
-    drawerOpen: {
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerClose: {
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        overflowX: 'hidden',
-        width: theme.spacing.unit * 7 + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9 + 1,
-        },
-    },
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
-    content: {
-        //flexGrow: 1,
-        //flexShrink: 5,
-        padding: theme.spacing.unit * 3,
-        marginTop: 65,
-        justifyContent: 'center',
-        display: 'grid',
-        overflowY: 'overlay',
-    },
-    grow: {
-        flexGrow: 1,
-    },
-    username: {
-        marginRight: 20,
-    }
-});
+import SnackbarPopup from './SnackbarPopup'
+import styles from './styles/Dashboard'
 
 class Dashboard extends React.Component {
     state = {
@@ -137,7 +60,6 @@ class Dashboard extends React.Component {
                     >
                         <Toolbar disableGutters={!this.state.open}>
                             <IconButton
-                                // color="black"
                                 aria-label="Open drawer"
                                 onClick={this.handleDrawerOpen}
                                 className={classNames(classes.menuButton, {
@@ -146,8 +68,6 @@ class Dashboard extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            {/* <div style={{ width: 'inherit', display: 'flex', justifyContent: 'space-between' }}> */}
-
                             <Typography
                                 variant="h6"
                                 className={classes.grow}
@@ -161,7 +81,6 @@ class Dashboard extends React.Component {
                             <Typography variant="h6" className={classes.username}>
                                 Welcome {username}
                             </Typography>
-                            {/* </div> */}
                         </Toolbar>
                     </AppBar>
                     <Drawer
@@ -184,35 +103,37 @@ class Dashboard extends React.Component {
                             </IconButton>
                         </div>
                         <Divider />
-                        <Link to="/" >
-                            <ListItem button key="Home" >
-                                <ListItemIcon><HomeOutlined /></ListItemIcon>
-                                <ListItemText primary="Home" />
+                        <List>
+                            <Link to="/" >
+                                <ListItem button key="Home" >
+                                    <ListItemIcon><HomeOutlined /></ListItemIcon>
+                                    <ListItemText primary="Home" />
+                                </ListItem>
+                            </Link>
+                            <Link to="/add" >
+                                <ListItem button key="NewQuestion">
+                                    <ListItemIcon><QuestionAnswer /></ListItemIcon>
+                                    <ListItemText primary="New Question" />
+                                </ListItem>
+                            </Link>
+                            <Link to='/leaderboard' >
+                                <ListItem button key="LeaderBoard">
+                                    <ListItemIcon><TrendingUpSharp /></ListItemIcon>
+                                    <ListItemText primary="Leader Board" />
+                                </ListItem>
+                            </Link>
+                            <ListItem button key="Logout" onClick={this.logout}>
+                                <ListItemIcon><ExitToApp /></ListItemIcon>
+                                <ListItemText primary="Logout" />
                             </ListItem>
-                        </Link>
-                        <Link to="/add" >
-                            <ListItem button key="NewQuestion">
-                                <ListItemIcon><QuestionAnswer /></ListItemIcon>
-                                <ListItemText primary="New Question" />
-                            </ListItem>
-                        </Link>
-                        <Link to='/leaderboard' >
-                            <ListItem button key="LeaderBoard">
-                                <ListItemIcon><TrendingUpSharp /></ListItemIcon>
-                                <ListItemText primary="Leader Board" />
-                            </ListItem>
-                        </Link>
-                        <ListItem button key="Logout" onClick={this.logout}>
-                            <ListItemIcon><ExitToApp /></ListItemIcon>
-                            <ListItemText primary="Logout" />
-                        </ListItem>
                         </List>
-                    <Divider style={{ marginTop: 30, marginBottom: 30 }} />
+                        <Divider className={classes.divider} />
 
                     </Drawer>
-                <div className={classes.content}>
-                    {children}
-                </div>
+                    <SnackbarPopup close={this.state.open} />
+                    <div className={classes.content}>
+                        {children}
+                    </div>
                 </div >
             );
     }
@@ -225,7 +146,7 @@ Dashboard.propTypes = {
 
 Dashboard = withStyles(styles, { withTheme: true })(Dashboard);
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return ({
         authedUser: state.authedUser,
         username: (state.authedUser) ? state.users[state.authedUser].name : false,
@@ -233,4 +154,3 @@ const mapStateToProps = (state, ownProps) => {
     })
 }
 export default connect(mapStateToProps)(Dashboard);
-//export default withRouter(connect(mapStateToProps)(Dashboard));

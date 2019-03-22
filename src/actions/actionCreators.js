@@ -13,11 +13,6 @@ export const initialDataActionCreator = (users, questions) => ({
 })
 
 
-// export const authedUserActionCreator = (authedUser) => ({
-//     type: LOGIN_USER,
-//     authedUser,
-// })
-
 export const authedUserActionCreator = (authedUser) => {
     return {
         type: LOGIN_USER,

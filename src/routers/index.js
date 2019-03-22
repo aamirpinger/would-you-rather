@@ -7,6 +7,7 @@ import QuestionAttempting from '../components/QuestionAttempting'
 import NewQuestion from '../components/NewQuestion'
 import WhiteCard from '../components/WhiteCard'
 import LeaderBoard from '../components/LeaderBoard'
+import ErrorPage from '../components/ErrorPage';
 function Routers() {
     return (
         <Switch>
@@ -38,7 +39,7 @@ function Routers() {
                 </Dashboard>)}
             />
 
-            <Route render={() => <h1>Wrong URL</h1>} />
+            <Route render={() => <ErrorPage />} />
         </Switch>
     );
 }

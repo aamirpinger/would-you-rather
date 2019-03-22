@@ -156,7 +156,7 @@ class Dashboard extends React.Component {
                                 Would you rather?
                             </Typography>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Avatar width={70} height={70} avatarURL={avatarURL} authorName={username} />
+                                <Avatar width={65} height={65} avatarURL={avatarURL} authorName={username} />
                             </div>
                             <Typography variant="h6" className={classes.username}>
                                 Welcome {username}
@@ -184,38 +184,35 @@ class Dashboard extends React.Component {
                             </IconButton>
                         </div>
                         <Divider />
-                        <List>
-                            <Link to="/" >
-                                <ListItem button key="Home" >
-                                    <ListItemIcon><HomeOutlined /></ListItemIcon>
-                                    <ListItemText primary="Home" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/add" >
-                                <ListItem button key="NewQuestion">
-                                    <ListItemIcon><QuestionAnswer /></ListItemIcon>
-                                    <ListItemText primary="New Question" />
-                                </ListItem>
-                            </Link>
+                        <Link to="/" >
+                            <ListItem button key="Home" >
+                                <ListItemIcon><HomeOutlined /></ListItemIcon>
+                                <ListItemText primary="Home" />
+                            </ListItem>
+                        </Link>
+                        <Link to="/add" >
+                            <ListItem button key="NewQuestion">
+                                <ListItemIcon><QuestionAnswer /></ListItemIcon>
+                                <ListItemText primary="New Question" />
+                            </ListItem>
+                        </Link>
+                        <Link to='/leaderboard' >
                             <ListItem button key="LeaderBoard">
                                 <ListItemIcon><TrendingUpSharp /></ListItemIcon>
                                 <ListItemText primary="Leader Board" />
                             </ListItem>
-                            <ListItem button key="Logout" onClick={this.logout}>
-                                <ListItemIcon><ExitToApp /></ListItemIcon>
-                                <ListItemText primary="Logout" />
-                            </ListItem>
+                        </Link>
+                        <ListItem button key="Logout" onClick={this.logout}>
+                            <ListItemIcon><ExitToApp /></ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItem>
                         </List>
-                        <Divider style={{ marginTop: 30, marginBottom: 30 }} />
+                    <Divider style={{ marginTop: 30, marginBottom: 30 }} />
 
                     </Drawer>
-                    <div className={classes.content}>
-
-                        {/* "asked" , "ask" ,"header" */}
-                        {/* <Panel username="Aamir Pinger" headerType="leader" /> */}
-                        {children}
-
-                    </div>
+                <div className={classes.content}>
+                    {children}
+                </div>
                 </div >
             );
     }

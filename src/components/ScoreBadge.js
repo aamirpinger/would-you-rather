@@ -13,6 +13,7 @@ const styles = theme => ({
 
 function ScoreBadge(props) {
     // const { width, height, classes } = props
+    const { totalScore } = props
     return (
         <div style={{
             flex: 1,
@@ -31,7 +32,7 @@ function ScoreBadge(props) {
             <h4 style={{ margin: 0 }}>SCORE</h4>
             <Divider width='100%' />
             <div style={{ borderRadius: 200, textAlign: 'center', justifyContent: 'center', alignItems: 'center', display: 'flex', width: 40, height: 40, background: '#EABA00' }}>
-                50
+                {totalScore}
             </div>
 
         </div>

@@ -8,36 +8,18 @@ import Button from '@material-ui/core/Button';
 import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { dispatch_saveQuestionAction } from '../actions/actionDispatchers'
+
 const styles = theme => ({
-    // root: {
-    //     // ...theme.mixins.gutters(),
-    //     // paddingTop: theme.spacing.unit * 2,
-    //     // paddingBottom: theme.spacing.unit * 2,
-    //     display: 'flex',
-    //     width: 600,
-    //     minHeight: 270,
-    //     // justifyContent: 'center',
-    //     alignItems: 'center',
-    //     // textAlign: 'center',
-    // },
     centerScreen: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        // alignItems: 'center',
-        // textAlign: 'center',
-        // minHeight: '93vh',
-        //backgroundColor: "#f1f1c0",
         minHeight: 'inherit',
-        // paddingTop: 80,
     },
     textField: {
-        //width: '80%',
         flex: 2,
         display: 'flex',
-        //marginLeft: 15,
-        //border: '2px solid black',
         marginTop: 2,
         marginBottom: 2,
     },
@@ -65,13 +47,11 @@ const styles = theme => ({
     },
     cssFocused: {},
     margin: {
-        // margin: theme.spacing.unit,
         marginLeft: 15,
     },
     button: {
         border: "0.1em solid #EABA00",
         backgroundColor: "white",
-        //width: 180,
         '&:hover': {
             backgroundColor: '#EABA00',
         },
@@ -94,9 +74,17 @@ class NewQuestion extends Component {
 
     handleSubmit = () => {
         const { author, } = this.props
-        const { optionOneText, optionTwoText } = this.state
-        this.props.dispatch(dispatch_saveQuestionAction({ optionOneText, optionTwoText, author }))
-            .then(() => this.setState({ submited: true }))
+        let { optionOneText, optionTwoText } = this.state
+
+        optionOneText = optionOneText.trim()
+        optionTwoText = optionTwoText.trim()
+
+        if (optionOneText && optionTwoText) {
+            this.props.dispatch(dispatch_saveQuestionAction({ optionOneText, optionTwoText, author }))
+                .then(() => this.setState({ submited: true }))
+        } else {
+            alert("Option One or Option Two cannot be submited empty")
+        }
 
     }
 
@@ -104,8 +92,6 @@ class NewQuestion extends Component {
     render() {
         const { classes, } = this.props
         const { submited } = this.state
-
-
 
         return (submited)
             ? <Redirect to='/' />
@@ -115,11 +101,11 @@ class NewQuestion extends Component {
                     <div style={{ background: "#EABA00", }}>
                         <Typography variant="h6" component="h5" style={{ flex: 2, display: 'flex', justifyContent: 'left', alignItems: 'center', margin: 20, }}>
                             Complete the question
-            </Typography>
+                        </Typography>
                     </div>
                     <Typography variant="h5" component="h5" style={{ flex: 2, textAlign: 'left', margin: 10, marginLeft: 20 }}>
                         Would you rather ...
-            </Typography>
+                    </Typography>
 
                     <FormControl className={classes.margin} style={{ marginBottom: 25, }}>
                         <InputLabel
@@ -130,7 +116,7 @@ class NewQuestion extends Component {
                             }}
                         >
                             Option One
-                </InputLabel>
+                        </InputLabel>
                         <Input
                             id="custom-css-standard-input"
                             classes={{
@@ -142,7 +128,7 @@ class NewQuestion extends Component {
                     </FormControl>
                     <Typography variant="h5" component="h5" className={classes.textField} style={{ justifyContent: 'center', color: "#EABA00", alignItems: 'center', }}>
                         --------  OR --------
-            </Typography>
+                    </Typography>
                     <FormControl className={classes.margin} style={{ marginBottom: 25, }}>
                         <InputLabel
                             htmlFor="optionOne-input"
@@ -152,7 +138,7 @@ class NewQuestion extends Component {
                             }}
                         >
                             Option Two
-                </InputLabel>
+                         </InputLabel>
                         <Input
                             id="optionTwo-input"
                             classes={{

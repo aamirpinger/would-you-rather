@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,7 +13,6 @@ import FilledInput from '@material-ui/core/FilledInput';
 import { connect } from 'react-redux';
 import { dispatch_authedUserAction, } from '../actions/actionDispatchers'
 import { Redirect, } from 'react-router-dom'
-// import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
     card: {
@@ -25,9 +23,8 @@ const styles = theme => ({
         backgroundColor: "#EABA00",
     },
     media: {
-        width: 250,
-        paddingTop: '56.25%', // 16:9
-        display: 'flex'
+        width: 300,
+        height: 300
     },
     actions: {
         display: 'flex',
@@ -81,10 +78,10 @@ class LoginPage extends React.Component {
                         title="WOULD YOU RATHER?"
                         classes={{ title: classes.header, }}
                     />
-                    <CardMedia
+                    <img
+                        src={require("../images/app-logo.png")}
                         className={classes.media}
-                        image={require("../images/app-logo.png")}
-                        title="WOULD YOU RATHER?"
+                        alt="Would you rather logo"
                     />
 
                     <CardContent >
@@ -134,4 +131,3 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(LoginPage)
-//export default withRouter(connect(mapStateToProps)(LoginPage))

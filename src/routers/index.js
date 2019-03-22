@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import QuestionAttempting from '../components/QuestionAttempting'
 import NewQuestion from '../components/NewQuestion'
 import WhiteCard from '../components/WhiteCard'
+import LeaderBoard from '../components/LeaderBoard'
 function Routers() {
     return (
         <Switch>
@@ -31,6 +32,12 @@ function Routers() {
                     <QuestionAttempting />
                 </Dashboard>)}
             />
+            <Route exact path="/leaderboard" render={() => (
+                <Dashboard >
+                    <LeaderBoard />
+                </Dashboard>)}
+            />
+
             <Route render={() => <h1>Wrong URL</h1>} />
         </Switch>
     );

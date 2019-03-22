@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import styles from './styles/SnackbarPopup'
 
@@ -35,7 +36,7 @@ class SnackbarPopup extends React.Component {
                     ContentProps={{
                         'aria-describedby': 'message-id',
                     }}
-                    message={<span id="message-id">Click here to open the menu drawer</span>}
+                    message={<span id="message-id">Click <MenuIcon /> to open the menu drawer</span>}
                     action={[
                         <IconButton
                             key="close"

@@ -6,6 +6,7 @@ const styles = theme => ({
         alignItems: 'center',
         textAlign: 'center',
         minHeight: '100vh',
+        background: "#f1f1c0",
 
     },
     text: {

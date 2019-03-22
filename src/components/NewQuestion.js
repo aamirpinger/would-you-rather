@@ -12,7 +12,6 @@ import styles from './styles/NewQuestion'
 
 class NewQuestion extends Component {
 
-
     state = {
         optionOneText: '',
         optionTwoText: '',
@@ -31,8 +30,13 @@ class NewQuestion extends Component {
         optionTwoText = optionTwoText.trim()
 
         if (optionOneText && optionTwoText) {
-            this.props.dispatch(dispatch_saveQuestionAction({ optionOneText, optionTwoText, author }))
-                .then(() => this.setState({ submited: true }))
+            if (optionOneText !== optionTwoText) {
+                this.props.dispatch(dispatch_saveQuestionAction({ optionOneText, optionTwoText, author }))
+                    .then(() => this.setState({ submited: true }))
+            }
+            else {
+                alert("Option One and Option Two cannot be same")
+            }
         } else {
             alert("Option One or Option Two cannot be submited empty")
         }

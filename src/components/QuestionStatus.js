@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -10,52 +10,48 @@ import QuestionBoard from './QuestionBoard'
 import { connect } from 'react-redux';
 import styles from './styles/QuestionStatus'
 
-class QuestionStatus extends Component {
+function QuestionStatus(props) {
 
-    render() {
-        const { classes, questions, users, type } = this.props;
-        return (
-            <div>
-                {
-                    (questions.length === 0) && <h1>Nothing to display</h1>
-                }
-                {questions.map((question) =>
-                    <Panel headerType={`${users[question.author].name} ${(type === 'answered') ? 'asked' : 'asks'}:`} key={question.id}>
-                        <WhiteCard>
-                            <QuestionBoard avatarURL={users[question.author].avatarURL} authorName={users[question.author].name}>
-                                <div
-                                    style={{
-                                        flex: 5, justifyContent: 'space-between',
-                                        alignItems: 'left', flexDirection: 'column', display: 'flex',
-                                        padding: 8, minHeight: 'inherit',
-                                    }}>
-                                    <Typography variant="h4" component="h3" className={classes.heading} >
-                                        Would you rather...
+    const { classes, questions, users, type } = props;
+    return (
+        <div>
+            {
+                (questions.length === 0) && <h1>Nothing to display</h1>
+            }
+            {questions.map((question) =>
+                <Panel headerType={`${users[question.author].name} ${(type === 'answered') ? 'asked' : 'asks'}:`} key={question.id}>
+                    <WhiteCard>
+                        <QuestionBoard avatarURL={users[question.author].avatarURL} authorName={users[question.author].name}>
+                            <div
+                                style={{
+                                    flex: 5, justifyContent: 'space-between',
+                                    alignItems: 'left', flexDirection: 'column', display: 'flex',
+                                    padding: 8, minHeight: 'inherit',
+                                }}>
+                                <Typography variant="h4" component="h3" className={classes.heading} >
+                                    Would you rather...
                                          </Typography>
-                                    <Divider />
-                                    <Typography variant="h6" component="p" className={classes.answers}>
-                                        ...{question.optionOne.text.slice(0, 8)}...
+                                <Divider />
+                                <Typography variant="h6" component="p" className={classes.answers}>
+                                    ...{question.optionOne.text.slice(0, 8)}...
                                         </Typography>
-                                    <Link to={`/questions/${question.id}`}>
-                                        <Button variant="contained" className={classes.button}>
-                                            View Poll
+                                <Link to={`/questions/${question.id}`}>
+                                    <Button variant="contained" className={classes.button}>
+                                        View Poll
                                             </Button>
-                                    </Link>
-                                </div>
-                            </QuestionBoard>
-                        </WhiteCard>
-                    </Panel>
-                )
-                }
-            </div>
-        );
-    }
+                                </Link>
+                            </div>
+                        </QuestionBoard>
+                    </WhiteCard>
+                </Panel>
+            )
+            }
+        </div>
+    );
 }
-
-QuestionStatus = withStyles(styles)(QuestionStatus)
 
 const mapStateToProps = (state) => ({
     users: state.users,
 })
 
-export default connect(mapStateToProps)(QuestionStatus)
+export default connect(mapStateToProps)(withStyles(styles)(QuestionStatus))

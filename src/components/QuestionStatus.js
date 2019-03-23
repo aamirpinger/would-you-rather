@@ -9,6 +9,7 @@ import WhiteCard from './WhiteCard'
 import QuestionBoard from './QuestionBoard'
 import { connect } from 'react-redux';
 import styles from './styles/QuestionStatus'
+import PropTypes from 'prop-types';
 
 function QuestionStatus(props) {
 
@@ -49,6 +50,14 @@ function QuestionStatus(props) {
         </div>
     );
 }
+
+
+QuestionStatus.propTypes = {
+    classes: PropTypes.object.isRequired,
+    questions: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
+    type: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => ({
     users: state.users,

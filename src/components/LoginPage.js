@@ -12,17 +12,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FilledInput from '@material-ui/core/FilledInput';
 import { connect } from 'react-redux';
 import { dispatch_authedUserAction, } from '../actions/actionDispatchers'
-import { Redirect, } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import styles from './styles/LoginPage'
 
 function LoginPage(props) {
+    const { classes, users, authedUser, login } = props;
 
-    const handleChange = event => {
-        props.dispatch(dispatch_authedUserAction(event.target.value))
-    }
-    const { classes, users, authedUser } = props;
     return (authedUser)
-        ? <Redirect to='/' />
+        ? <Redirect
+            to={{
+                pathname: (props.location.state) ? props.location.state.referrer : "/",
+            }}
+        />
         : (<div className={classes.centerScreen} >
             <Card className={classes.card} raised>
                 <CardHeader
@@ -47,7 +48,7 @@ function LoginPage(props) {
 
                         <Select
                             value={authedUser}
-                            onChange={handleChange}
+                            onChange={login}
                             input={<FilledInput name="username" id="username" classes={{
                                 underline: classes.underline,
                             }} />}
@@ -57,7 +58,7 @@ function LoginPage(props) {
                             </MenuItem>
                             {
                                 Object.values(users).map((user) =>
-                                    <MenuItem key={user.id} value={user.id} onChange={handleChange}>
+                                    <MenuItem key={user.id} value={user.id} >
                                         {user.name}
                                     </MenuItem>)
                             }
@@ -71,11 +72,21 @@ function LoginPage(props) {
 
 LoginPage.propTypes = {
     classes: PropTypes.object.isRequired,
+    users: PropTypes.object.isRequired,
+    authedUser: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+    ]).isRequired,
+    login: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+    login: (event) => dispatch(dispatch_authedUserAction(event.target.value))
+})
 
 const mapStateToProps = (state) => ({
     users: state.users,
     authedUser: state.authedUser
 })
 
-export default connect(mapStateToProps)(withStyles(styles)(LoginPage))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginPage)))

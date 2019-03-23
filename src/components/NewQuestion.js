@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
@@ -15,7 +16,8 @@ class NewQuestion extends Component {
     state = {
         optionOneText: '',
         optionTwoText: '',
-        submited: false
+        submited: false,
+        buttonDisabled: false,
     }
 
     handleChangeOne = (e) => this.setState({ optionOneText: e.target.value })
@@ -31,7 +33,11 @@ class NewQuestion extends Component {
 
         if (optionOneText && optionTwoText) {
             if (optionOneText !== optionTwoText) {
-                this.props.dispatch(dispatch_saveQuestionAction({ optionOneText, optionTwoText, author }))
+                // this buttonDisabled state change is needed because when you double click to save the
+                // question it send double request in which first request saves the question and second request
+                // generate the error on console
+                this.setState({ buttonDisabled: true })
+                this.props.saveQuestion({ optionOneText, optionTwoText, author })
                     .then(() => this.setState({ submited: true }))
             }
             else {
@@ -43,13 +49,17 @@ class NewQuestion extends Component {
 
     }
 
-
     render() {
-        const { classes, } = this.props
+        const { classes } = this.props
         const { submited } = this.state
 
         return (submited)
-            ? <Redirect to='/' />
+            ? <Redirect
+                to={{
+                    pathname: "/",
+                    state: { referrer: '/add' }
+                }}
+            />
             : (
                 <div className={classes.centerScreen}>
 
@@ -103,22 +113,33 @@ class NewQuestion extends Component {
                             value={this.state.optionTwo}
                         />
                     </FormControl>
-                    <Button variant="contained" className={classes.button} onClick={this.handleSubmit}>
+                    <Button
+                        variant="contained"
+                        className={classes.button}
+                        onClick={this.handleSubmit}
+                        disabled={this.state.buttonDisabled}
+                    >
                         Submit
                      </Button>
                 </div>
             )
     }
 }
+NewQuestion.propTypes = {
+    classes: PropTypes.object.isRequired,
+    author: PropTypes.string.isRequired,
+    saveQuestion: PropTypes.func.isRequired,
+};
 
 NewQuestion = withStyles(styles)(NewQuestion);
 
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => ({
+    saveQuestion: (question) => dispatch(dispatch_saveQuestionAction(question))
+})
 
-    return {
-        author: state.authedUser,
-    }
-}
+const mapStateToProps = (state) => ({
+    author: state.authedUser,
+})
 
-export default withRouter(connect(mapStateToProps)(NewQuestion))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewQuestion))

@@ -7,13 +7,16 @@ import QuestionAttempting from '../components/QuestionAttempting'
 import NewQuestion from '../components/NewQuestion'
 import WhiteCard from '../components/WhiteCard'
 import LeaderBoard from '../components/LeaderBoard'
-import ErrorPage from '../components/ErrorPage';
+import ErrorPage from '../components/ErrorPage'
+import Logout from '../components/Logout'
+
 function Routers() {
     return (
         <Switch>
             <Route exact path="/login" render={() => (
                 <LoginPage />)}
             />
+
             <Route exact path="/" render={() => (
                 <Dashboard >
                     <QuestionList />
@@ -37,6 +40,10 @@ function Routers() {
                 <Dashboard >
                     <LeaderBoard />
                 </Dashboard>)}
+            />
+            <Route exact path="/logout" render={() => (
+                <Logout />
+            )}
             />
 
             <Route render={() => <ErrorPage />} />

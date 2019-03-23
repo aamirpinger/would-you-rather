@@ -5,29 +5,34 @@ import { dispatch_initialDataAction } from '../actions/actionDispatchers'
 import Loader from './Loader'
 import './styles/App.css';
 import Routers from '../routers';
+import PropTypes from 'prop-types';
 
 class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(dispatch_initialDataAction())
+    this.props.initialData()
   }
 
   render() {
-
-    if (this.props.loading) {
-      return <Loader />
-    }
-
-    return (
-      <div>
+    return (this.props.loading)
+      ? <Loader />
+      : (<div>
         <Routers />
-      </div>
-
-
-    );
+      </div>);
   }
 }
 
+
+App.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  initialData: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  initialData: () => dispatch(dispatch_initialDataAction())
+})
+
 const mapStateToProps = (state) => ({ loading: state.loading })
 
-export default withRouter(connect(mapStateToProps)(App));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

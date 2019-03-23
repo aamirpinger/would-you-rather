@@ -10,7 +10,7 @@ const styles = theme => ({
     GridListTile: {
         justifyContent: 'center',
         display: 'flex',
-    }
+    },
 })
 
 

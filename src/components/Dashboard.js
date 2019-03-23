@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -23,7 +23,6 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswerOutlined';
 import TrendingUpSharp from '@material-ui/icons/TrendingUpSharp';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Avatar from './Avatar';
-import { dispatch_userLoggedOutAction } from '../actions/actionDispatchers'
 import SnackbarPopup from './SnackbarPopup'
 import styles from './styles/Dashboard'
 
@@ -40,15 +39,16 @@ class Dashboard extends React.Component {
         this.setState({ open: false });
     };
 
-    logout = () => { this.props.dispatch(dispatch_userLoggedOutAction()) }
-
-
-
     render() {
-        const { classes, theme, authedUser, username, avatarURL, children } = this.props;
+        const { classes, theme, authedUser, username, avatarURL, children, } = this.props;
 
         return (!authedUser)
-            ? <Redirect to="/login" />
+            ? <Redirect
+                to={{
+                    pathname: "/login",
+                    state: { referrer: this.props.location.pathname }
+                }}
+            />
             : (
                 <div className={classes.root}>
                     <CssBaseline />
@@ -122,10 +122,12 @@ class Dashboard extends React.Component {
                                     <ListItemText primary="Leader Board" />
                                 </ListItem>
                             </Link>
-                            <ListItem button key="Logout" onClick={this.logout}>
-                                <ListItemIcon><ExitToApp /></ListItemIcon>
-                                <ListItemText primary="Logout" />
-                            </ListItem>
+                            <Link to='/logout'>
+                                <ListItem button key="Logout">
+                                    <ListItemIcon><ExitToApp /></ListItemIcon>
+                                    <ListItemText primary="Logout" />
+                                </ListItem>
+                            </Link>
                         </List>
                         <Divider className={classes.divider} />
 
@@ -142,9 +144,20 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
+    authedUser: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+    ]).isRequired,
+    username: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+    ]).isRequired,
+    avatarURL: PropTypes.string.isRequired,
+    children: PropTypes.object.isRequired,
 };
 
 Dashboard = withStyles(styles, { withTheme: true })(Dashboard);
+
 
 const mapStateToProps = (state) => {
     return ({
@@ -153,4 +166,4 @@ const mapStateToProps = (state) => {
         avatarURL: (state.authedUser) ? state.users[state.authedUser].avatarURL : '',
     })
 }
-export default connect(mapStateToProps)(Dashboard);
+export default withRouter(connect(mapStateToProps)(Dashboard));

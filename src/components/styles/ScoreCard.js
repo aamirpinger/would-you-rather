@@ -32,7 +32,8 @@ const styles = theme => ({
     questionAsked: {
         textAlign: 'left',
         display: 'flex',
-        marginBottom: 15
+        marginBottom: 15,
+        marginLeft: 8
     }
 })
 

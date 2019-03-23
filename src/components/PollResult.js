@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import PollBar from './PollBar'
@@ -20,5 +20,9 @@ function PollResult(props) {
         </div>
     );
 }
+PollResult.propTypes = {
+    classes: PropTypes.object.isRequired,
+    question: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(PollResult);

@@ -6,7 +6,6 @@ import styles from './styles/WhiteCard'
 
 function WhiteCard(props) {
     const { classes, children } = props;
-
     return (
         <div className={classes.main}>
             <Paper className={classes.root} elevation={10} >
@@ -18,6 +17,7 @@ function WhiteCard(props) {
 
 WhiteCard.propTypes = {
     classes: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(WhiteCard);

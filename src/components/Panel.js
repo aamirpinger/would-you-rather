@@ -34,6 +34,8 @@ function Panel(props) {
 
 Panel.propTypes = {
     classes: PropTypes.object.isRequired,
+    headerType: PropTypes.string.isRequired,
+    children: PropTypes.object.isRequired,
 };
 
 

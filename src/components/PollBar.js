@@ -6,6 +6,7 @@ import Badge from '@material-ui/core/Badge';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import styles from './styles/PollBar'
+import PropTypes from 'prop-types';
 
 function PollBar(props) {
     const { classes, authedUser, option, totalVotes } = props;
@@ -19,7 +20,11 @@ function PollBar(props) {
                 </Typography>
             </div>
 
-            <Badge className={classes.margin} classes={{ badge: classes.badge }} badgeContent={(option.votes.indexOf(authedUser) >= 0) ? "your vote" : ""} color="primary" >
+            <Badge className={classes.margin}
+                classes={{ badge: classes.badge }}
+                badgeContent={(option.votes.indexOf(authedUser) >= 0) ? "your vote" : ""}
+                color="primary"
+            >
                 <div />
             </Badge>
 
@@ -44,6 +49,13 @@ function PollBar(props) {
         </div>
     )
 }
+
+PollBar.propTypes = {
+    classes: PropTypes.object.isRequired,
+    authedUser: PropTypes.string.isRequired,
+    option: PropTypes.object.isRequired,
+    totalVotes: PropTypes.number.isRequired,
+};
 
 const mapStateToProps = (state, ownProps) => {
     const { qid } = ownProps.match.params

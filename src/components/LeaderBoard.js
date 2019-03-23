@@ -8,9 +8,11 @@ import ScoreBadge from './ScoreBadge'
 import WhiteCard from './WhiteCard'
 import { connect } from 'react-redux'
 import styles from './styles/LeaderBoard'
+import PropTypes from 'prop-types';
 
 function LeaderBoard(props) {
     const { classes, userRanking } = props
+
     return (
         Object.values(userRanking).map((user) => {
             const { id, name, avatarURL, questionAsked, answered } = user
@@ -36,6 +38,11 @@ function LeaderBoard(props) {
 
     )
 }
+
+LeaderBoard.propTypes = {
+    classes: PropTypes.object.isRequired,
+    userRanking: PropTypes.array.isRequired,
+};
 
 const mapStateToProps = (state) => {
     return ({

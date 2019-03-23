@@ -56,6 +56,7 @@ class SnackbarPopup extends React.Component {
 
 SnackbarPopup.propTypes = {
     classes: PropTypes.object.isRequired,
+    close: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(SnackbarPopup);

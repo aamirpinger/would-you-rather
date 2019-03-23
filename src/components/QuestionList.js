@@ -49,6 +49,9 @@ class QuestionList extends React.Component {
 
 QuestionList.propTypes = {
     classes: PropTypes.object.isRequired,
+    unAnsweredQuestion: PropTypes.array.isRequired,
+    answeredQuestion: PropTypes.array.isRequired,
+    authedUser: PropTypes.string.isRequired,
 };
 
 QuestionList = withStyles(styles)(QuestionList);

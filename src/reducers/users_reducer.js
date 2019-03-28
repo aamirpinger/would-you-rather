@@ -15,8 +15,15 @@ function users_reducer(state = [], action) {
             Object.assign(state[action.authedUser]['answers'], { [action.qid]: action.answer })
             return state
         case SAVE_QUESTION:
-            state[action.question.author].questions.push(action.question.id)
-            return state
+            //state[action.question.author].questions.push(action.question.id)
+            //return state
+            return {
+                ...state,
+                [action.question.author]: {
+                    ...state[action.question.author],
+                    questions: [...state[action.question.author].questions, action.question.id]
+                }
+            }
         default:
             return state
     }
